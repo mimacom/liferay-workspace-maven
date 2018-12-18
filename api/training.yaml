@@ -1,0 +1,132 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Mimacom Training
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080/o/training/api/v1
+paths:
+  /todos:
+    get:
+      summary: List all todos
+      operationId: listTodos
+      tags:
+        - todos
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of todos
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todos"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a todo
+      operationId: createTodo
+      tags:
+        - todos
+      requestBody:
+        description: Todo to add to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTodo'
+      responses:
+        '201':
+          description: Created
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /todos/{todoId}:
+    get:
+      summary: Info for a specific todo
+      operationId: getTodoById
+      tags:
+        - todos
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: The id of the todo to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The requested todo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Todo:
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        done:
+          type: boolean
+          default: false
+        tag:
+          type: string
+    NewTodo:
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        tag:
+          type: string
+    Todos:
+      type: array
+      items:
+        $ref: "#/components/schemas/Todo"
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

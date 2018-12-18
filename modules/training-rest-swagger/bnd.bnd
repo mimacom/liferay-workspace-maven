@@ -1,0 +1,15 @@
+Bundle-Name: mimacom Training REST (Swagger)
+Bundle-SymbolicName: com.mimacom.training.rest
+Bundle-Version: 1.0.0-SNAPSHOT
+
+Import-Package: !javax.validation.*,\
+                !javax.activation,\
+                *
+
+-includeresource: META-INF/lib/swagger-annotations.jar=swagger-annotations-2.0.6.jar;lib:=true,\
+                  META-INF/lib/jackson-annotations.jar=jackson-annotations-[0-9]*.jar;lib:=true,\
+                  META-INF/lib/jackson-core.jar=jackson-core-[0-9]*.jar;lib:=true,\
+                  META-INF/lib/jackson-databind.jar=jackson-databind-[0-9]*.jar;lib:=true,\
+                  META-INF/lib/jackson-jaxrs-base.jar=jackson-jaxrs-base-[0-9]*.jar;lib:=true,\
+                  META-INF/lib/jackson-jaxrs-json-provider.jar=jackson-jaxrs-json-provider-[0-9]*.jar;lib:=true,\
+                  META-INF/lib/jackson-module-jaxb-annotations.jar=jackson-module-jaxb-annotations-[0-9]*.jar;lib:=true

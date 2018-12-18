@@ -1,1 +1,1 @@
-# liferay-workspace-maven
+# Liferay Workspace starter
